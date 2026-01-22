@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'login.css' %}">
+</head>
+<body>
+    
+    <form method="POST">
+        <h2>Login Form</h2>
+    {% csrf_token %}
+    <div>
+        <label style="font-style: italic;" for="">Enter Username</label>
+        <input type="text" name="username" required>
+    </div>
+    <div>
+        <label style="font-style: italic;" for="">Enter Password</label>
+        <input type="password" name="password" required>
+    </div>
+    <div>
+        <button style="font-style: italic;" type="submit">Login</button>
+    </div>
+</form>
+
+</body>
+</html>

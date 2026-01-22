@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 style="font-style: italic;">All Blogs</h1>
+
+{% for blog in blogs %}
+    <h2 style="font-style: italic;">{{ blog.title }}</h2>
+    <p style="font-style: italic;">{{ blog.content }}</p>
+    <p style="display: flex; justify-content: end; font-style: italic;">--By {{ blog.author.username }}</p>
+
+    <!-- LIKE BUTTON -->
+    <form method="POST" action="{% url 'like_blog' blog.id %}">
+        {% csrf_token %}
+        {% if user in blog.likes.all %}
+            <button>❤️</button>
+        {% else %}
+            <button>🤍</button>
+        {% endif %}
+    </form>
+
+    <p style="font-style: italic;">{{ blog.total_likes }} Likes</p>
+
+    {% if user == blog.author %}
+        <a style="font-style: italic;" class="edit-btn" href="{% url 'edit_blog' blog.id %}">Edit</a>
+        <a style="font-style: italic;" class="delete-btn" href="{% url 'delete_blog' blog.id %}">Delete</a>
+    {% endif %}
+
+    <h4 style="font-style: italic;">Comments</h4>
+
+    {% for comment in blog.comments.all %}
+        <p>
+            <b style="font-style: italic;">{{ comment.user.username }}</b>:
+            {{ comment.text }}
+        </p>
+    {% empty %}
+        <p style="font-style: italic;">No comments yet.</p>
+    {% endfor %}
+
+    {% if user.is_authenticated %}
+    <form method="POST" action="{% url 'add_comment' blog.id %}">
+        {% csrf_token %}
+        <input type="text" name="comment" placeholder="Add comment" required>
+        <button style="font-style: italic;" type="submit">Post</button>
+    </form>
+    {% endif %}
+
+    <hr>
+{% endfor %}
+
+{% endblock %}
+

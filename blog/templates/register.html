@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'register.css' %}">
+</head>
+<body>
+    <form method="POST">
+    {% csrf_token %}
+    <h2>Registration Form</h2>
+    <div>
+        <label style="font-style: italic;" for="">Enter Username</label>
+        <input style="font-style: italic;" type="text" name="username" placeholder="Username" required><br>
+    </div>
+    <div>
+        <label style="font-style: italic;" for="">Enter Email</label>
+        <input style="font-style: italic;" type="email" name="email" placeholder="Email" required><br>
+    </div>
+    <div>
+        <label style="font-style: italic;" for="">Enter Password</label>
+        <input style="font-style: italic;" type="password" name="password" placeholder="Password" required><br>
+    </div>
+    <div>
+        <label style="font-style: italic;" for="">Confirm Your Password</label>
+        <input style="font-style: italic;" type="password" name="confirm_password" placeholder="Confirm Password" required><br>
+    </div>
+    <div>
+        <button style="font-style: italic;" type="submit">Register</button>
+    </div>
+</form>
+
+
+</body>
+</html>

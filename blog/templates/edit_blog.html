@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Edit Blog</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    <input type="text" name="title" value="{{ blog.title }}"><br>
+    <textarea name="content">{{ blog.content }}</textarea><br>
+    <button>Update</button>
+</form>
+{% endblock %}
