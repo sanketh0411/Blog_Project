@@ -8,6 +8,54 @@
     <link rel="stylesheet" href="{% static 'register.css' %}">
 </head>
 <body>
+    <!-- TOAST MESSAGES -->
+{% if messages %}
+    {% for message in messages %}
+        {% if message.tags == 'error' %}
+            <div style="
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #f44336;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 6px;
+        z-index: 9999;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    ">
+                {{ message }}
+            </div>
+        {% else %}
+          <div style="
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 6px;
+        z-index: 9999;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    ">
+                {{ message }}
+            </div>
+        {% endif %}
+    {% endfor %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const toast = document.querySelector('[style*="position: fixed"]');
+                if(toast){
+                    toast.remove();
+                }
+            }, 3000);
+        });
+    </script>
+{% endif %}
+
+
+
+
     <form method="POST">
     {% csrf_token %}
     <h2>Registration Form</h2>

@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Blog,Comment
 
+
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseForbidden
 
@@ -17,7 +18,7 @@ def register(request):
 
         if password != confirm_password:
             messages.error(request, "Passwords do not match")
-            print("Passwords do not match")
+            # print("Passwords do not match")
             return redirect('register')
 
         if User.objects.filter(username=username).exists():
@@ -31,6 +32,7 @@ def register(request):
             password=password
         )
         user.save()
+        messages.success(request, "Registration successful")
         return redirect('login')
 
     return render(request, 'register.html')
@@ -44,9 +46,10 @@ def user_login(request):
         user = authenticate(request, username=username, password=password)
         if user:
             login(request, user)
+            messages.success(request, "Login successful")
             return redirect('home')
         else:
-            # messages.error(request, "Invalid credentials")
+            messages.error(request, "Invalid credentials")
             print("Invalid credentials")
             return redirect('login')
 
@@ -64,6 +67,7 @@ def create_blog(request):
             title=title,
             content=content
         )
+        messages.success(request, "Blog created successfully")
         return redirect('home')
 
     return render(request, 'create_blog.html')
@@ -86,6 +90,7 @@ def like_blog(request, blog_id):
 @login_required
 def user_logout(request):
     logout(request)
+    messages.success(request, "Logged out successfully")
     return redirect('login')
 
 @login_required
@@ -99,6 +104,7 @@ def edit_blog(request, blog_id):
         blog.title = request.POST['title']
         blog.content = request.POST['content']
         blog.save()
+        messages.success(request, "Blog updated successfully")
         return redirect('home')
 
     return render(request, 'edit_blog.html', {'blog': blog})
@@ -112,6 +118,7 @@ def delete_blog(request, blog_id):
         return HttpResponseForbidden("You are not allowed")
 
     blog.delete()
+    messages.success(request, "Blog deleted successfully")
     return redirect('home')
 
 
@@ -125,5 +132,6 @@ def add_comment(request, blog_id):
             user=request.user,
             text=request.POST['comment']
         )
+        messages.success(request, "Comment added successfully")
 
     return redirect('home')
